@@ -11,4 +11,4 @@ class claude_call:
             max_tokens=1024,
             messages=[{"role": "user", "content": message}],
         )
-        return respons.content.text
+        return respons.content[0].text

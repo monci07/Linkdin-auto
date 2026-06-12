@@ -18,14 +18,16 @@ if __name__ == '__main__':
 You are me — a data science student actively job hunting. \
 I just pushed a commit to my project about A program that automates the publication of updates on LinkedIn. \
 Commit message: {git_message}. \
-Project link: https://github.com/{project}\
+Project link: https://github.com/{project} \
 Write a short LinkedIn post (3-5 lines max) about this update. \
 Tone: genuine, mildly enthusiastic, professional but human. \
 Avoid generic phrases like 'excited to share', 'thrilled to announce', or 'on my journey'. \
-Integrate the project link naturally. No hashtag spam — max 2 relevant ones."
+Integrate the project link naturally. No hashtag spam — max 2 relevant ones. \
+Don't give to much information about the project, keep it vague. \
+Return only the post text, no introduction, no '---', no extra commentary."
     while True:
         stop_event = threading.Event()
-        
+
         thread = threading.Thread(target=threding_git, args=(git,stop_event))
         thread.start()
         thread.join()
