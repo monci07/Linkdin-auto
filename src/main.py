@@ -1,4 +1,5 @@
 from github_fetch import github_fetch
+from claude_call import claude_call
 import threading
 
 last_commit = None
@@ -10,16 +11,25 @@ def threding_git(git, stop_event):
         if not new_commit: stop_event.set()
 
 if __name__ == '__main__':
-    git = github_fetch('monci07/Linkdin-auto')
+    project = 'monci07/Linkdin-auto'
+    git = github_fetch(project)
+    claude = claude_call()
+    message = "\
+You are me — a data science student actively job hunting. \
+I just pushed a commit to my project about A program that automates the publication of updates on LinkedIn. \
+Commit message: {git_message}. \
+Project link: https://github.com/{project}\
+Write a short LinkedIn post (3-5 lines max) about this update. \
+Tone: genuine, mildly enthusiastic, professional but human. \
+Avoid generic phrases like 'excited to share', 'thrilled to announce', or 'on my journey'. \
+Integrate the project link naturally. No hashtag spam — max 2 relevant ones."
+    while True:
+        stop_event = threading.Event()
     
-    stop_event = threading.Event()
-    
-    thread = threading.Thread(target=threding_git, args=(git,stop_event))
-    thread.start()
-    thread.join()
-    
-    print(f"SHA:     {last_commit.sha[:7]}")
-    print(f"Autor:   {last_commit.commit.author.name}")
-    print(f"Fecha:   {last_commit.commit.author.date}")
-    print(f"Mensaje: {last_commit.commit.message[:80]}")
-    print("---")
+        thread = threading.Thread(target=threding_git, args=(git,stop_event))
+        thread.start()
+        thread.join()
+        
+        response = claude.call(message.format(git_message=last_commit.commit.message.text, project = project))
+        print(response)
+
