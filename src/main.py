@@ -30,6 +30,7 @@ Integrate the project link naturally. No hashtag spam — max 2 relevant ones."
         thread.start()
         thread.join()
         
+        
         response = claude.call(message.format(git_message=last_commit.commit.message.text, project = project))
         print(response)
 
