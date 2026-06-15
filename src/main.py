@@ -66,8 +66,11 @@ mutation {
         thread.start()
         thread.join()
         
-        response_claude = claude.call(message.format(git_message=last_commit.commit.message.split('\n\n')[1], project = project)).replace('"', '\\"').replace('\n', ' ')
-        
+        response_claude = claude.call(message.format(git_message=last_commit.commit.message.split('\n\n')[1], project = project))\
+                        .replace('\r\n', ' ')\
+                        .replace('\r', ' ')\
+                        .replace('\n', ' ')\
+                        .replace('"', '\\"')
 
         response = requests.post(
             "https://api.buffer.com",
