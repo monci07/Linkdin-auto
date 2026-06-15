@@ -2,8 +2,8 @@ import anthropic
 
 class claude_call:
     
-    def __init__(self):
-        self.client = anthropic.Anthropic(api_key="")
+    def __init__(self,key:str):
+        self.client = anthropic.Anthropic(api_key=key)
 
     def call(self, message):
         respons = self.client.messages.create(

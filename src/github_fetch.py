@@ -4,9 +4,9 @@ class github_fetch:
     repo = None
     last_sha = None
     
-    def __init__(self, repo: str):
+    def __init__(self, key:str, repo: str):
         try:
-            g = Github("")
+            g = Github(key)
             self.repo = g.get_repo(repo)
             commits = self.repo.get_commits()
             self.last_sha = commits[0].sha[:7]
