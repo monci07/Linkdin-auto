@@ -75,7 +75,7 @@ mutation {
                 "Authorization": f"Bearer {keys['Buffer']}",
             },
             json={
-                "query": query.format(Response=response_claude, ID=keys['ChannelID(linkedin)']),
+                "query": query.replace('{Response}',response_claude).replace('{ID}', keys['ChannelID(linkedin)'])
             },
         )
 
