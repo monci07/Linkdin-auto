@@ -5,6 +5,7 @@ import threading
 import requests
 import json
 import sys
+import time
 
 last_commit = None
 
@@ -17,6 +18,7 @@ def get_keys():
 def threding_git(git, stop_event):
     global last_commit
     while not stop_event.is_set():
+        time.sleep(600)
         new_commit, last_commit = git.get_last_commit()
         if not new_commit: stop_event.set()
 
