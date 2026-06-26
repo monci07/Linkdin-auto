@@ -18,7 +18,7 @@ def get_keys():
 def threding_git(git, stop_event):
     global last_commit
     while not stop_event.is_set():
-        time.sleep(600)
+        time.sleep(300)
         new_commit, last_commit = git.get_last_commit()
         if not new_commit: stop_event.set()
 
@@ -30,7 +30,7 @@ if __name__ == '__main__':
     claude = claude_call(keys['Claude'])
     message = "\
 You are me — a data science student actively job hunting. \
-I just pushed a commit to my project about A program that automates the publication of updates on LinkedIn. \
+I just pushed a commit to my project about {description}. \
 Commit message: {git_message}. \
 Project link: https://github.com/{project} \
 Write a short LinkedIn post (3-5 lines max) about this update. \
@@ -71,7 +71,9 @@ mutation {
         thread.start()
         thread.join()
         
-        response_claude = claude.call(message.format(git_message=last_commit.commit.message.split('\n\n')[1], project = project))\
+        response_claude = claude.call(message.format(description = keys['Description'], 
+                                        git_message=last_commit.commit.message.split('\n\n')[1], 
+                                        project = project))\
                         .replace('"', '\\"')
 
         response = requests.post(
