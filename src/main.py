@@ -48,7 +48,7 @@ mutation {
     text: "{Response}"
     channelId: "{ID}"
     schedulingType: automatic
-    mode: addToQueue
+    mode: now
   }) {
     ... on PostActionSuccess {
       post {
